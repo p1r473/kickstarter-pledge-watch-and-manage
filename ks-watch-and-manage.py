@@ -251,7 +251,6 @@ def pledge_menu(rewards):
     if count == 1:
         return rewards[0]
 
-    #import pdb; pdb.set_trace()
     while True:
         try:
 
