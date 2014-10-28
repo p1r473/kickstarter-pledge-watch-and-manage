@@ -256,14 +256,12 @@ def pledge_menu(rewards):
 
             if args.pledge:
                 numbers = args.pledge
-
             else:
                 for i in xrange(count):
                     print '%u. $%u %s' % (i + 1, rewards[i][0], rewards[i][4][:70])
                     print '\t\t %s' % (rewards[i][2])
                 ans = raw_input('\nSelect pledge levels: ')
                 numbers = map(int, ans.split())
-                
             return [rewards[i - 1] for i in numbers]
         except (IndexError, NameError, SyntaxError):
             continue
@@ -334,7 +332,6 @@ if args.cookies:
         sys.exit(0)
     else:
         logger.info('Successfully logged into Kickstarter using cookies')
-
 if args.pledge_amount:
     logger.debug('Pledges are given in amount')
     pledges = args.pledge
@@ -352,7 +349,6 @@ while True:
 
 	if ids:
 	    selected = [r for r in rewards if r[3] in ids]
-		
     else:
         if pledges:
             selected = [r for r in rewards if r[0] in pledges]
@@ -368,7 +364,7 @@ while True:
         priority = range(0,len(ids))
         pledge_priority_reached = len(ids) + 1
 
-     for stat, s, id, current_priority in zip(stats, selected, ids, priority):
+    for stat, s, id, current_priority in zip(stats, selected, ids, priority):
 
         if s[1] > 0 or s[2] == 'Unlimited' and current_priority < pledge_priority_reached:
 
