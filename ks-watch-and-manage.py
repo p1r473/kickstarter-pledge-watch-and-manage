@@ -25,6 +25,7 @@
 # the possibility of such damage.
 
 import sys
+import codecs
 import os
 import time
 import urllib
@@ -39,6 +40,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("main")
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 # Instead of parsing the HTML, we will parse some Javascript variables
 # embedded in the page. The values contained in them are mostly json
@@ -224,7 +226,7 @@ class KickstarterPledgeManage:
         submit_data['backing[amount]'] = s[0] * multiply_
         if submit_data['backing[domestic]'] == '0':
             submit_data['backing[amount]'] += s[5] #international shipping
-        submit_data['backing[amount]'] += s[0] * add_
+        submit_data['backing[amount]'] += add_
         submit_data['backing[backer_reward_id]'] = id
         data = urllib.urlencode(submit_data)
 
@@ -249,17 +251,24 @@ def pledge_menu(rewards):
     if count == 1:
         return rewards[0]
 
-    for i in xrange(count):
-        print '%u. $%u %s' % (i + 1, rewards[i][0], rewards[i][4][:70])
-        print '\t\t %s' % (rewards[i][2])
-
+    #import pdb; pdb.set_trace()
     while True:
         try:
-            ans = raw_input('\nSelect pledge levels: ')
-            numbers = map(int, ans.split())
+
+            if args.pledge:
+                numbers = args.pledge
+
+            else:
+                for i in xrange(count):
+                    print '%u. $%u %s' % (i + 1, rewards[i][0], rewards[i][4][:70])
+                    print '\t\t %s' % (rewards[i][2])
+                ans = raw_input('\nSelect pledge levels: ')
+                numbers = map(int, ans.split())
+                
             return [rewards[i - 1] for i in numbers]
         except (IndexError, NameError, SyntaxError):
             continue
+
 
 parser = argparse.ArgumentParser(
     description="This script notifies you by opening the manage pledge page" +
@@ -343,8 +352,9 @@ while True:
         logger.info('No limited rewards for this Kickstarter')
         sys.exit(0)
 
-    if ids:
-        selected = [r for r in rewards if r[3] in ids]
+	if ids:
+	    selected = [r for r in rewards if r[3] in ids]
+		
     else:
         if pledges:
             selected = [r for r in rewards if r[0] in pledges]
@@ -359,16 +369,22 @@ while True:
         stats = [s[1] for s in selected]
         priority = range(0,len(ids))
         pledge_priority_reached = len(ids) + 1
-
+	
     for stat, s, id, current_priority in zip(stats, selected, ids, priority):
 
         if s[1] > 0 or s[2] == 'Unlimited' and current_priority < pledge_priority_reached:
 
             if use_credentials:
                 pledge_manage.change_pledge(id, args.pledge_multiple, args.fixed_addition)
+                import subprocess
+                subprocess.call(["blink1-tool.exe", "--green"])
+                subprocess.call(["twt.exe", "#repledged"])
                 print 'Re-pledged!!!'
             else :
                 if args.no_browser:
+                    import subprocess
+                    subprocess.call(["blink1-tool.exe", "--green"])
+                    subprocess.call(["twt.exe", "#repledged"])
                     print 'Alert!!! Monitored pledge is unlocked: ', s[4]
                 else:
                     webbrowser.open_new_tab(url)
