@@ -347,7 +347,7 @@ while True:
         sys.exit(0)
 
     if ids:
-    	selected = [r for r in rewards if r[3] in ids]
+        selected = [r for r in rewards if r[3] in ids]
     else:
         if pledges:
             selected = [r for r in rewards if r[0] in pledges]
