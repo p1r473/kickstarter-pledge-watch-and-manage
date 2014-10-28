@@ -363,7 +363,7 @@ while True:
         stats = [s[1] for s in selected]
         priority = range(0,len(ids))
         pledge_priority_reached = len(ids) + 1
-	
+
     for stat, s, id, current_priority in zip(stats, selected, ids, priority):
 
         if s[1] > 0 or s[2] == 'Unlimited' and current_priority < pledge_priority_reached:
