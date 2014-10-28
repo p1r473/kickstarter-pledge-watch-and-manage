@@ -331,7 +331,7 @@ if args.cookies:
         sys.exit(0)
     else:
         logger.info('Successfully logged into Kickstarter using cookies')
-        
+
 if args.pledge_amount:
     logger.debug('Pledges are given in amount')
     pledges = args.pledge
