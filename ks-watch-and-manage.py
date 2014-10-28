@@ -268,7 +268,6 @@ def pledge_menu(rewards):
         except (IndexError, NameError, SyntaxError):
             continue
 
-
 parser = argparse.ArgumentParser(
     description="This script notifies you by opening the manage pledge page" +
     " in the browser when a locked Kickstarter  pledge level becomes available" +
@@ -368,22 +367,22 @@ while True:
         stats = [s[1] for s in selected]
         priority = range(0,len(ids))
         pledge_priority_reached = len(ids) + 1
-	
-    for stat, s, id, current_priority in zip(stats, selected, ids, priority):
+
+     for stat, s, id, current_priority in zip(stats, selected, ids, priority):
 
         if s[1] > 0 or s[2] == 'Unlimited' and current_priority < pledge_priority_reached:
 
             if use_credentials:
                 pledge_manage.change_pledge(id, args.pledge_multiple, args.fixed_addition)
-                import subprocess
-                subprocess.call(["blink1-tool.exe", "--green"])
-                subprocess.call(["twt.exe", "#repledged"])
+                #import subprocess
+                #subprocess.call(["blink1-tool.exe", "--green"])
+                #subprocess.call(["twt.exe", "#repledged"])
                 print 'Re-pledged!!!'
             else :
                 if args.no_browser:
-                    import subprocess
-                    subprocess.call(["blink1-tool.exe", "--green"])
-                    subprocess.call(["twt.exe", "#repledged"])
+                    #import subprocess
+                    #subprocess.call(["blink1-tool.exe", "--green"])
+                    #subprocess.call(["twt.exe", "#repledged"])
                     print 'Alert!!! Monitored pledge is unlocked: ', s[4]
                 else:
                     webbrowser.open_new_tab(url)
