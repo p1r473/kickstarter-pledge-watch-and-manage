@@ -251,19 +251,24 @@ def pledge_menu(rewards):
     if count == 1:
         return rewards[0]
 
+    #import pdb; pdb.set_trace()
     while True:
         try:
+
             if args.pledge:
                 numbers = args.pledge
+
             else:
                 for i in xrange(count):
                     print '%u. $%u %s' % (i + 1, rewards[i][0], rewards[i][4][:70])
                     print '\t\t %s' % (rewards[i][2])
                 ans = raw_input('\nSelect pledge levels: ')
                 numbers = map(int, ans.split())
+                
             return [rewards[i - 1] for i in numbers]
         except (IndexError, NameError, SyntaxError):
             continue
+
 
 parser = argparse.ArgumentParser(
     description="This script notifies you by opening the manage pledge page" +
@@ -347,8 +352,9 @@ while True:
         logger.info('No limited rewards for this Kickstarter')
         sys.exit(0)
 
-    if ids:
-        selected = [r for r in rewards if r[3] in ids]
+	if ids:
+	    selected = [r for r in rewards if r[3] in ids]
+		
     else:
         if pledges:
             selected = [r for r in rewards if r[0] in pledges]
@@ -370,15 +376,15 @@ while True:
 
             if use_credentials:
                 pledge_manage.change_pledge(id, args.pledge_multiple, args.fixed_addition)
-                #import subprocess
-                #subprocess.call(["blink1-tool.exe", "--green"])
-                #subprocess.call(["twt.exe", "#repledged"])
+                import subprocess
+                subprocess.call(["blink1-tool.exe", "--green"])
+                subprocess.call(["twt.exe", "#repledged"])
                 print 'Re-pledged!!!'
             else :
                 if args.no_browser:
-                    #import subprocess
-                    #subprocess.call(["blink1-tool.exe", "--green"])
-                    #subprocess.call(["twt.exe", "#repledged"])
+                    import subprocess
+                    subprocess.call(["blink1-tool.exe", "--green"])
+                    subprocess.call(["twt.exe", "#repledged"])
                     print 'Alert!!! Monitored pledge is unlocked: ', s[4]
                 else:
                     webbrowser.open_new_tab(url)
