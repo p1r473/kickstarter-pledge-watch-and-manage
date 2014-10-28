@@ -253,21 +253,17 @@ def pledge_menu(rewards):
 
     while True:
         try:
-
             if args.pledge:
                 numbers = args.pledge
-
             else:
                 for i in xrange(count):
                     print '%u. $%u %s' % (i + 1, rewards[i][0], rewards[i][4][:70])
                     print '\t\t %s' % (rewards[i][2])
                 ans = raw_input('\nSelect pledge levels: ')
                 numbers = map(int, ans.split())
-                
             return [rewards[i - 1] for i in numbers]
         except (IndexError, NameError, SyntaxError):
             continue
-
 
 parser = argparse.ArgumentParser(
     description="This script notifies you by opening the manage pledge page" +
@@ -353,7 +349,6 @@ while True:
 
 	if ids:
 	    selected = [r for r in rewards if r[3] in ids]
-		
     else:
         if pledges:
             selected = [r for r in rewards if r[0] in pledges]
