@@ -370,15 +370,9 @@ while True:
 
             if use_credentials:
                 pledge_manage.change_pledge(id, args.pledge_multiple, args.fixed_addition)
-                #import subprocess
-                #subprocess.call(["blink1-tool.exe", "--green"])
-                #subprocess.call(["twt.exe", "#repledged"])
                 print 'Re-pledged!!!'
             else :
                 if args.no_browser:
-                    #import subprocess
-                    #subprocess.call(["blink1-tool.exe", "--green"])
-                    #subprocess.call(["twt.exe", "#repledged"])
                     print 'Alert!!! Monitored pledge is unlocked: ', s[4]
                 else:
                     webbrowser.open_new_tab(url)
